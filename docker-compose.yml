@@ -1,0 +1,40 @@
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: clouddeploy-postgres
+    environment:
+      POSTGRES_DB: clouddeploy
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - clouddeploy-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: clouddeploy-backend
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/clouddeploy
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    networks:
+      - clouddeploy-network
+
+volumes:
+  postgres_data:
+    external: true
+    name: 943ea15599abe69aef911d2e64b3a203fb4ffd18988210731c7514909381aeb7
+
+networks:
+  clouddeploy-network:
+    name: clouddeploy-network
