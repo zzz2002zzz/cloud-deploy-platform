@@ -23,3 +23,6 @@ application-local.properties
 # Operating system files
 .DS_Store
 Thumbs.db
+
+# Local database backups
+*.dump
