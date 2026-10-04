@@ -44,3 +44,6 @@ jobs:
           DB_USERNAME: postgres
           DB_PASSWORD: postgres
         run: chmod +x mvnw && ./mvnw --batch-mode clean verify
+
+      - name: Build Docker image
+        run: docker build -t cloud-deploy-platform-backend:latest ./backend
