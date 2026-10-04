@@ -1,250 +1,160 @@
-\# Cloud Deploy Platform
+# Cloud Deploy Platform
 
+A DevOps-focused application that demonstrates backend development, containerization, database integration, and Continuous Integration (CI) using modern development tools.
 
+## Project Overview
 
-A containerized application deployment project built to practise DevOps fundamentals, Docker, CI automation, and database integration.
+Cloud Deploy Platform is a containerized Spring Boot REST API connected to PostgreSQL. Docker Compose manages the application services, while GitHub Actions automates the build, verification, and Docker image build process.
 
+## Technologies Used
 
+* **Backend:** Java 21, Spring Boot
+* **Database:** PostgreSQL 16
+* **Build Tool:** Maven
+* **Containerization:** Docker, Docker Compose
+* **CI/CD:** GitHub Actions
+* **Health Monitoring:** Spring Boot Actuator
+* **Version Control:** Git, GitHub
 
-\## Project Overview
-
-
-
-Cloud Deploy Platform is a Spring Boot REST API connected to PostgreSQL. Docker containers run the application and database, while GitHub Actions automatically builds and tests the backend when changes are pushed.
-
-
-
-\## Technology Stack
-
-
-
-\* \*\*Backend:\*\* Java 21, Spring Boot, Maven
-
-\* \*\*Database:\*\* PostgreSQL 16
-
-\* \*\*Containers:\*\* Docker, Docker Compose
-
-\* \*\*CI:\*\* GitHub Actions
-
-\* \*\*Version Control:\*\* Git and GitHub
-
-
-
-\## Architecture
-
-
+## Architecture
 
 ```text
-
 Developer
-
-&#x20;  |
-
-&#x20;  v
-
-GitHub Repository
-
-&#x20;  |
-
-&#x20;  v
-
-GitHub Actions CI
-
-&#x20;  |
-
-&#x20;  v
-
-Build and Test
-
-&#x20;  |
-
-&#x20;  v
-
-Spring Boot REST API
-
-&#x20;  |
-
-&#x20;  v
-
-PostgreSQL Database
-
+    |
+    v
+   GitHub
+    |
+    v
+GitHub Actions
+    |
+    +-- Build and verify application
+    |
+    +-- Build Docker image
+    |
+    v
+Docker Compose
+    |
+    +-- Spring Boot Backend (:8080)
+    |
+    +-- PostgreSQL Database (:5432)
 ```
 
+## Key Features
 
+* REST API for managing tasks
+* PostgreSQL database integration
+* Containerized backend application
+* Docker Compose service orchestration
+* Automated CI workflow with GitHub Actions
+* Application health checks using Spring Boot Actuator
+* Persistent database storage
 
-\## Features
+## Getting Started
 
+### Prerequisites
 
+Install Git, Java 21, Docker Desktop, and Docker Compose.
 
-\* REST API for managing tasks
-
-\* PostgreSQL database integration
-
-\* Docker containerization
-
-\* Docker Compose configuration
-
-\* PostgreSQL health check
-
-\* GitHub Actions CI workflow
-
-\* Actuator health endpoint
-
-\* Persistent database storage
-
-
-
-\## API Endpoints
-
-
-
-| Method | Endpoint           | Purpose                  |
-
-| ------ | ------------------ | ------------------------ |
-
-| GET    | `/actuator/health` | Check application health |
-
-| GET    | `/api/tasks`       | Retrieve tasks           |
-
-
-
-\## Run Locally
-
-
-
-\### Prerequisites
-
-
-
-\* Java 21
-
-\* Maven
-
-\* Docker Desktop
-
-\* Git
-
-
-
-\### Start the Application
-
-
+### Run the Application
 
 Clone the repository:
 
-
-
 ```bash
-
 git clone https://github.com/zzz2002zzz/cloud-deploy-platform.git
-
 cd cloud-deploy-platform
-
 ```
 
-
-
-Build the backend:
-
-
+Start the services using Docker Compose:
 
 ```bash
-
-docker compose build backend
-
+docker compose up -d --build
 ```
 
-
-
-Start the services:
-
-
+Check the running containers:
 
 ```bash
-
-docker compose up -d
-
-```
-
-
-
-Check the services:
-
-
-
-```bash
-
 docker compose ps
-
 ```
 
+### Verify Application Health
 
+Open:
 
-Check application health:
+`http://localhost:8080/actuator/health`
 
+A healthy application should return a status of `UP`.
 
+## API Examples
 
-```bash
+Base URL: `http://localhost:8080`
 
-curl http://localhost:8080/actuator/health
+### Get All Tasks
 
+```http
+GET /api/tasks
 ```
 
+### Create a Task
 
-
-Retrieve tasks:
-
-
-
-```bash
-
-curl http://localhost:8080/api/tasks
-
+```http
+POST /api/tasks
+Content-Type: application/json
 ```
 
+Example request body (adjust fields to match the API model):
 
+```json
+{
+  "title": "Deploy application",
+  "description": "Deploy the application",
+  "status": "TODO"
+}
+```
 
-\## Continuous Integration
+### Health Check
 
+```http
+GET /actuator/health
+```
 
+## Continuous Integration
 
-GitHub Actions runs the backend CI workflow when changes are pushed to the repository. The workflow builds and tests the application with PostgreSQL configured for CI.
+The GitHub Actions workflow runs when code is pushed to `main` or a pull request targets `main`.
 
+The pipeline includes:
 
+* Java 21 environment setup
+* Maven build and verification
+* Automated test execution through Maven
+* Docker image build
 
-\## Future Improvements
+View workflow runs in the repository's **Actions** tab.
 
+## Project Structure
 
+```text
+cloud-deploy-platform/
+├── .github/
+│   └── workflows/
+│       └── ci.yml
+├── backend/
+│   ├── src/
+│   ├── Dockerfile
+│   └── pom.xml
+├── docker-compose.yml
+└── README.md
+```
 
-\* Container image publishing
+## Future Improvements
 
-\* Kubernetes deployment
+* Infrastructure provisioning with Terraform
+* Deployment to a cloud platform
+* Monitoring and visualization with Prometheus and Grafana
 
-\* Prometheus and Grafana monitoring
+## Author
 
-\* Cloud deployment
+**Chamudi Thamasha**
 
-\* Automated deployment pipeline
-
-
-
-\## Author
-
-
-
-\*\*Chamudi Thamasha\*\*
-
-
+Information Technology Undergraduate | Aspiring DevOps Engineer
 
 GitHub: https://github.com/zzz2002zzz
-
-
-
-\---
-
-
-
-\*This project is being developed as a hands-on DevOps and cloud engineering learning project.\*
-
-
-
